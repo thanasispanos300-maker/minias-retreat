@@ -35,6 +35,7 @@
             letter-spacing: -0.02em;
         }
 
+       
         .navbar {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -48,6 +49,12 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
         }
 
         .logo {
@@ -374,6 +381,27 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        });
+    </script>
+        <script>
+        // Hide navbar on scroll down, show on scroll up
+        let lastScroll = 0;
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                navbar.classList.remove('hidden');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !navbar.classList.contains('hidden')) {
+                navbar.classList.add('hidden');
+            } else if (currentScroll < lastScroll && navbar.classList.contains('hidden')) {
+                navbar.classList.remove('hidden');
+            }
+            lastScroll = currentScroll;
         });
     </script>
 </body>
